@@ -13,7 +13,7 @@ class Todo {
   Todo copyWith({
     String? id,
     String? description,
-    DateTime? completed,
+    DateTime? completedAt,
   }) =>
       Todo(
           id: id ?? this.id,

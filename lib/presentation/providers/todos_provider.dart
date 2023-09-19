@@ -4,9 +4,9 @@ import 'package:river_app/domain/domain.dart';
 import 'package:uuid/uuid.dart';
 
 const _uuid = Uuid();
+
 final todosProvider = StateNotifierProvider<TodosNotifier, List<Todo>>((ref) {
-  //notifier + state
-  return TodosNotifier();
+  return TodosNotifier(); // ???
 });
 
 class TodosNotifier extends StateNotifier<List<Todo>> {
@@ -27,25 +27,26 @@ class TodosNotifier extends StateNotifier<List<Todo>> {
           Todo(
               id: _uuid.v4(),
               description: RandomGenerator.getRandomName(),
-              completedAt: null)
+              completedAt: null),
         ]);
 
   void addTodo() {
     state = [
+      ...state,
       Todo(
           id: _uuid.v4(),
           description: RandomGenerator.getRandomName(),
           completedAt: null),
-      ...state
     ];
   }
 
   void toggleTodo(String id) {
     state = state.map((todo) {
       if (todo.id != id) return todo;
-      if (todo.done) return todo.copyWith(completed: null);
-      return todo.copyWith(completed: DateTime.now());
-      //return todo;
+
+      if (todo.done) return todo.copyWith(completedAt: null);
+
+      return todo.copyWith(completedAt: DateTime.now());
     }).toList();
   }
 }
